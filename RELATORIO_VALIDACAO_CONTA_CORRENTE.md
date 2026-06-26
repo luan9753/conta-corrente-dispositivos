@@ -1,6 +1,6 @@
 # Relatorio de validacao - Conta corrente de dispositivos
 
-Gerado em: 2026-06-26T19:57:10
+Gerado em: 2026-06-26T20:07:29
 Snapshot: `CONTA_CORRENTE_DISPOSITIVOS_DATA.js`
 Registros sistemicos: 15529
 Falhas obrigatorias: 0
@@ -25,11 +25,11 @@ Alertas: 1
 - `vwTabelaMovDataloggers`: tipo=sistemica, linhas_lidas=15505
 - `tbddataloggerhistoricos`: tipo=sistemica, linhas_lidas_latest=12222, linhas_rollup=12222
 - `vtc_stage.documentos`: tipo=sistemica, linhas_lidas=71837
-- `planilha_fixos_veiculos`: tipo=auxiliar, caminho=C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx, nome_arquivo=controle de loggers fixos dos veículos - atualizado.xlsx, existe=True, data_leitura=2026-06-26T19:56:04, abas=['LOGGERS FIXOS', 'COORDENADORES', 'DATA CALIBRAÇÃO', 'AGREGADOS', 'IMPRESSÃO', 'Planilha2'], colunas_identificadas=['EMPRESA', 'DESCRIÇÃO', 'PLACA', 'MOTORISTA', 'LOGGER 1', 'CALIBRAÇÃO', 'DIAS RESTANTES', 'SITUAÇÃO', 'LOGGER 2', 'CALIBRAÇÃO2', 'DIAS RESTANTES2', 'SITUAÇÃO2', 'LOGGER 3', 'CALIBRAÇÃO3', 'DIAS RESTANTES3', 'SITUAÇÃO3', 'STATUS', 'SENSORWEB 1', 'SENSORWEB 2', 'COORDENADOR', 'DATA DE INSTALAÇÃO', 'ÚLTIMA CONFIGURAÇÃO', 'PRAZO MÁXIMO DA MEMÓRIA', 'Dias Para Baixar', 'Data Atual', 'AÇÃO GQ', 'Check Coordenador', 'Concat', 'Check Pendência', 'Circustância', 'OBSERVAÇÃO', 'Coluna2'], linhas_lidas=107, tags_identificadas=186, linhas_sem_tag_suficiente=22, erro=None
+- `planilha_fixos_veiculos`: tipo=auxiliar, caminho=C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx, nome_arquivo=controle de loggers fixos dos veículos - atualizado.xlsx, existe=True, data_leitura=2026-06-26T20:06:19, abas=['LOGGERS FIXOS', 'COORDENADORES', 'DATA CALIBRAÇÃO', 'AGREGADOS', 'IMPRESSÃO', 'Planilha2'], colunas_identificadas=['EMPRESA', 'DESCRIÇÃO', 'PLACA', 'MOTORISTA', 'LOGGER 1', 'CALIBRAÇÃO', 'DIAS RESTANTES', 'SITUAÇÃO', 'LOGGER 2', 'CALIBRAÇÃO2', 'DIAS RESTANTES2', 'SITUAÇÃO2', 'LOGGER 3', 'CALIBRAÇÃO3', 'DIAS RESTANTES3', 'SITUAÇÃO3', 'STATUS', 'SENSORWEB 1', 'SENSORWEB 2', 'COORDENADOR', 'DATA DE INSTALAÇÃO', 'ÚLTIMA CONFIGURAÇÃO', 'PRAZO MÁXIMO DA MEMÓRIA', 'Dias Para Baixar', 'Data Atual', 'AÇÃO GQ', 'Check Coordenador', 'Concat', 'Check Pendência', 'Circustância', 'OBSERVAÇÃO', 'Coluna2'], linhas_lidas=107, tags_identificadas=186, linhas_sem_tag_suficiente=22, erro=None
 
 ## Planilha auxiliar de fixos em veiculos
 - Caminho: `C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx`
-- Data de leitura: 2026-06-26T19:56:04
+- Data de leitura: 2026-06-26T20:06:19
 - Abas: LOGGERS FIXOS, COORDENADORES, DATA CALIBRAÇÃO, AGREGADOS, IMPRESSÃO, Planilha2
 - Colunas identificadas: EMPRESA, DESCRIÇÃO, PLACA, MOTORISTA, LOGGER 1, CALIBRAÇÃO, DIAS RESTANTES, SITUAÇÃO, LOGGER 2, CALIBRAÇÃO2, DIAS RESTANTES2, SITUAÇÃO2, LOGGER 3, CALIBRAÇÃO3, DIAS RESTANTES3, SITUAÇÃO3, STATUS, SENSORWEB 1, SENSORWEB 2, COORDENADOR, DATA DE INSTALAÇÃO, ÚLTIMA CONFIGURAÇÃO, PRAZO MÁXIMO DA MEMÓRIA, Dias Para Baixar, Data Atual, AÇÃO GQ, Check Coordenador, Concat, Check Pendência, Circustância, OBSERVAÇÃO, Coluna2
 - Tags identificadas na planilha: 186
@@ -119,8 +119,8 @@ Alertas: 1
 | Arquivo | SHA-256 antes | SHA-256 depois |
 |---|---|---|
 | `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\GESTAO_DISPOSITIVOS.html` | `AF9BAFCAF492956835F327731FDDC1F73E105FDEDC318BACADB6E9B434EBC3B5` | `AF9BAFCAF492956835F327731FDDC1F73E105FDEDC318BACADB6E9B434EBC3B5` |
-| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\GESTAO_DISPOSITIVOS_STAGE_DATA.js` | `40E661794ACD80667E078C5F294E5F4FF6D22F1224A186C4AD77A8FB8CE22EDC` | `40E661794ACD80667E078C5F294E5F4FF6D22F1224A186C4AD77A8FB8CE22EDC` |
-| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\ESTOQUE_DATALOGGERS.html` | `3DE484BDA9F569582205F9FC816005127602DEA621DA044EB2CEDFE3C76C83AE` | `3DE484BDA9F569582205F9FC816005127602DEA621DA044EB2CEDFE3C76C83AE` |
+| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\GESTAO_DISPOSITIVOS_STAGE_DATA.js` | `48C33D39DE3A30C236880646F94692667D0D8F02FCFAD3A2FC84A22DF7BF99B3` | `48C33D39DE3A30C236880646F94692667D0D8F02FCFAD3A2FC84A22DF7BF99B3` |
+| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\ESTOQUE_DATALOGGERS.html` | `FB48C91A8A7E0BE4CBE72FDDAF211E12DA3EE9C8830733519C5ED4A3C4A0DC0E` | `FB48C91A8A7E0BE4CBE72FDDAF211E12DA3EE9C8830733519C5ED4A3C4A0DC0E` |
 | `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\ATUALIZAR_TUDO_10_MIN.ps1` | `D063B496BC52243634CB2C7EE384F02C1B206FF1A65C3EC26A650BAD02E3BD38` | `D063B496BC52243634CB2C7EE384F02C1B206FF1A65C3EC26A650BAD02E3BD38` |
 | `C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx` | `E75624F75EA907C089FD74653E52928A68B542B7BC04C0D9A2E11B8B08A88655` | `E75624F75EA907C089FD74653E52928A68B542B7BC04C0D9A2E11B8B08A88655` |
 
