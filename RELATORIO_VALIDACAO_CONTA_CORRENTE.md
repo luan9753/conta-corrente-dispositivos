@@ -1,6 +1,6 @@
 # Relatorio de validacao - Conta corrente de dispositivos
 
-Gerado em: 2026-06-26T20:23:46
+Gerado em: 2026-06-26T20:27:40
 Snapshot: `CONTA_CORRENTE_DISPOSITIVOS_DATA.js`
 Registros sistemicos: 15529
 Falhas obrigatorias: 0
@@ -25,11 +25,11 @@ Alertas: 1
 - `vwTabelaMovDataloggers`: tipo=sistemica, linhas_lidas=15505
 - `tbddataloggerhistoricos`: tipo=sistemica, linhas_lidas_latest=12222, linhas_rollup=12222
 - `vtc_stage.documentos`: tipo=sistemica, linhas_lidas=71837
-- `planilha_fixos_veiculos`: tipo=auxiliar, caminho=C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx, nome_arquivo=controle de loggers fixos dos veículos - atualizado.xlsx, existe=True, data_leitura=2026-06-26T20:22:18, abas=['LOGGERS FIXOS', 'COORDENADORES', 'DATA CALIBRAÇÃO', 'AGREGADOS', 'IMPRESSÃO', 'Planilha2'], colunas_identificadas=['EMPRESA', 'DESCRIÇÃO', 'PLACA', 'MOTORISTA', 'LOGGER 1', 'CALIBRAÇÃO', 'DIAS RESTANTES', 'SITUAÇÃO', 'LOGGER 2', 'CALIBRAÇÃO2', 'DIAS RESTANTES2', 'SITUAÇÃO2', 'LOGGER 3', 'CALIBRAÇÃO3', 'DIAS RESTANTES3', 'SITUAÇÃO3', 'STATUS', 'SENSORWEB 1', 'SENSORWEB 2', 'COORDENADOR', 'DATA DE INSTALAÇÃO', 'ÚLTIMA CONFIGURAÇÃO', 'PRAZO MÁXIMO DA MEMÓRIA', 'Dias Para Baixar', 'Data Atual', 'AÇÃO GQ', 'Check Coordenador', 'Concat', 'Check Pendência', 'Circustância', 'OBSERVAÇÃO', 'Coluna2'], linhas_lidas=107, tags_identificadas=186, linhas_sem_tag_suficiente=22, erro=None
+- `planilha_fixos_veiculos`: tipo=auxiliar, caminho=C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx, nome_arquivo=controle de loggers fixos dos veículos - atualizado.xlsx, existe=True, data_leitura=2026-06-26T20:26:11, abas=['LOGGERS FIXOS', 'COORDENADORES', 'DATA CALIBRAÇÃO', 'AGREGADOS', 'IMPRESSÃO', 'Planilha2'], colunas_identificadas=['EMPRESA', 'DESCRIÇÃO', 'PLACA', 'MOTORISTA', 'LOGGER 1', 'CALIBRAÇÃO', 'DIAS RESTANTES', 'SITUAÇÃO', 'LOGGER 2', 'CALIBRAÇÃO2', 'DIAS RESTANTES2', 'SITUAÇÃO2', 'LOGGER 3', 'CALIBRAÇÃO3', 'DIAS RESTANTES3', 'SITUAÇÃO3', 'STATUS', 'SENSORWEB 1', 'SENSORWEB 2', 'COORDENADOR', 'DATA DE INSTALAÇÃO', 'ÚLTIMA CONFIGURAÇÃO', 'PRAZO MÁXIMO DA MEMÓRIA', 'Dias Para Baixar', 'Data Atual', 'AÇÃO GQ', 'Check Coordenador', 'Concat', 'Check Pendência', 'Circustância', 'OBSERVAÇÃO', 'Coluna2'], linhas_lidas=107, tags_identificadas=186, linhas_sem_tag_suficiente=22, erro=None
 
 ## Planilha auxiliar de fixos em veiculos
 - Caminho: `C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx`
-- Data de leitura: 2026-06-26T20:22:18
+- Data de leitura: 2026-06-26T20:26:11
 - Abas: LOGGERS FIXOS, COORDENADORES, DATA CALIBRAÇÃO, AGREGADOS, IMPRESSÃO, Planilha2
 - Colunas identificadas: EMPRESA, DESCRIÇÃO, PLACA, MOTORISTA, LOGGER 1, CALIBRAÇÃO, DIAS RESTANTES, SITUAÇÃO, LOGGER 2, CALIBRAÇÃO2, DIAS RESTANTES2, SITUAÇÃO2, LOGGER 3, CALIBRAÇÃO3, DIAS RESTANTES3, SITUAÇÃO3, STATUS, SENSORWEB 1, SENSORWEB 2, COORDENADOR, DATA DE INSTALAÇÃO, ÚLTIMA CONFIGURAÇÃO, PRAZO MÁXIMO DA MEMÓRIA, Dias Para Baixar, Data Atual, AÇÃO GQ, Check Coordenador, Concat, Check Pendência, Circustância, OBSERVAÇÃO, Coluna2
 - Tags identificadas na planilha: 186
