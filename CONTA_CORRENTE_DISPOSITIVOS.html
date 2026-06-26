@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Conta Corrente de Dispositivos - Aura</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b1020;--panel:#121f34;--panel2:#0f1828;--line:#24344d;
+  --text:#e8edf5;--muted:#9fb7d4;--muted2:#7f95b2;
+  --blue:#3f7bc3;--blue2:#75b5ff;--green:#8bf0bf;--yellow:#ffd48a;--red:#ffb3b3;
+}
+body{min-height:100vh;background:var(--bg);color:var(--text);font-family:"Segoe UI",Arial,sans-serif;padding:18px}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.shell{max-width:1440px;margin:0 auto}
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:14px}
+.title h1{font-size:1.65rem;line-height:1.15;font-weight:800;letter-spacing:0}
+.title p{margin-top:6px;color:var(--muted);font-size:.92rem}
+.meta{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.pill{border:1px solid var(--line);background:#101b2e;color:#c9ddf5;border-radius:999px;padding:6px 10px;font-size:.78rem;font-weight:700}
+.pill.ok{color:var(--green);border-color:rgba(139,240,191,.35)}
+.pill.warn{color:var(--yellow);border-color:rgba(255,212,138,.35)}
+.grid-types{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px;margin-bottom:14px}
+.type-card{position:relative;background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px;padding:13px;min-height:164px;outline:none}
+.type-card:focus,.type-card:hover{border-color:#3f6799}
+.type-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.type-name{font-size:.95rem;color:#cfe1f7;font-weight:800}
+.type-date{font-size:.7rem;color:var(--muted2);text-align:right}
+.type-total{margin-top:10px;font-size:2.2rem;font-weight:800;line-height:1;color:#f7fbff}
+.type-caption{margin-top:4px;color:var(--muted);font-size:.76rem}
+.type-mini{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.mini-stat{border:1px solid #20314a;background:#0f192a;border-radius:8px;padding:8px}
+.mini-stat b{display:block;font-size:1.05rem}
+.mini-stat span{display:block;color:var(--muted2);font-size:.7rem;margin-top:2px}
+.detail-pop{position:absolute;z-index:5;left:10px;right:10px;top:54px;background:#0c1628;border:1px solid #365379;border-radius:8px;padding:8px;box-shadow:0 14px 34px rgba(0,0,0,.35);display:none}
+.type-card:hover .detail-pop,.type-card:focus-within .detail-pop,.type-card.open .detail-pop{display:block}
+.detail-row{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:0;background:transparent;color:var(--text);padding:7px 6px;border-radius:6px;text-align:left}
+.detail-row:hover{background:#13243c}
+.detail-row i{width:18px;color:var(--blue2)}
+.detail-row span{flex:1;color:#cbdcf2;font-size:.78rem}
+.detail-row b{font-size:.86rem}
+.section{margin-top:16px}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:0 2px 8px}
+.section-title{font-size:1rem;font-weight:800;color:#dceafe}
+.section-note{font-size:.76rem;color:var(--muted2);text-align:right}
+.kpi-grid{display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:10px}
+.kpi,.panel{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:8px}
+.kpi{padding:12px;min-height:88px}
+.kpi button{display:block;width:100%;background:transparent;border:0;text-align:left;color:inherit}
+.kpi-title{font-size:.76rem;color:var(--muted);font-weight:700}
+.kpi-value{margin-top:8px;font-size:1.55rem;font-weight:800;color:#f6fbff}
+.kpi-sub{margin-top:4px;color:var(--muted2);font-size:.72rem}
+.split{display:grid;grid-template-columns:1.15fr .85fr;gap:12px}
+.panel{padding:12px}
+.table{width:100%;border-collapse:collapse;font-size:.82rem}
+.table th,.table td{border-bottom:1px solid #21314b;padding:8px 7px;text-align:left;vertical-align:top}
+.table th{color:#cfe1f7;font-size:.75rem;text-transform:uppercase;letter-spacing:.02em}
+.table td{color:#d8e6f8}
+.muted{color:var(--muted2)}
+.manual-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px}
+.manual-card{border:1px solid var(--line);background:#101a2b;border-radius:8px;padding:11px}
+.manual-card h3{font-size:.9rem;margin-bottom:8px}
+.manual-card b{font-size:1.45rem}
+.manual-card p{margin-top:5px;color:var(--muted2);font-size:.74rem;line-height:1.35}
+.filter-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.filter-strip input,.filter-strip select{background:#0d1728;border:1px solid #2a3d5c;color:var(--text);border-radius:8px;padding:8px;min-width:150px}
+.drawer-backdrop{position:fixed;inset:0;background:rgba(3,8,18,.62);z-index:20;display:none}
+.drawer{position:fixed;top:0;right:0;width:min(980px,94vw);height:100vh;background:#0b1322;border-left:1px solid #2c4264;z-index:21;display:none;flex-direction:column}
+.drawer.open,.drawer-backdrop.open{display:flex}
+.drawer-backdrop.open{display:block}
+.drawer-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:14px;border-bottom:1px solid var(--line)}
+.drawer-head h2{font-size:1.05rem}
+.drawer-head p{margin-top:4px;color:var(--muted);font-size:.8rem}
+.icon-btn{height:34px;width:34px;border:1px solid var(--line);background:#111d31;color:var(--text);border-radius:8px}
+.drawer-body{padding:12px;overflow:auto}
+.count-line{margin-bottom:10px;color:var(--muted);font-size:.84rem}
+.tag-btn{background:transparent;border:0;color:var(--blue2);font-weight:800}
+.alert{border:1px solid rgba(255,212,138,.35);background:#171927;color:var(--yellow);border-radius:8px;padding:10px;font-size:.82rem;margin-bottom:10px}
+@media (max-width:1100px){.grid-types{grid-template-columns:repeat(2,1fr)}.kpi-grid{grid-template-columns:repeat(3,1fr)}.split{grid-template-columns:1fr}.manual-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:720px){body{padding:12px}.topbar{display:block}.meta{justify-content:flex-start;margin-top:10px}.grid-types,.kpi-grid,.manual-grid{grid-template-columns:1fr}.title h1{font-size:1.35rem}.type-total{font-size:1.9rem}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="title">
+      <h1>Conta Corrente de Dispositivos</h1>
+      <p>Posi&ccedil;&atilde;o atual por tag &uacute;nica, separada dos indicadores de movimenta&ccedil;&atilde;o.</p>
+    </div>
+    <div class="meta" id="meta"></div>
+  </header>
+
+  <main>
+    <section class="grid-types" id="typeCards"></section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">Localiza&ccedil;&otilde;es sist&ecirc;micas</div>
+        <div class="section-note">Calculado por tags &uacute;nicas; n&atilde;o usa os valores manuais de ARES.</div>
+      </div>
+      <div class="kpi-grid" id="locationGrid"></div>
+    </section>
+
+    <section class="section split">
+      <div class="panel">
+        <div class="section-head">
+          <div class="section-title">N&atilde;o retorno</div>
+          <div class="section-note">Faixas mutuamente exclusivas.</div>
+        </div>
+        <div class="kpi-grid" id="agingGrid"></div>
+      </div>
+      <div class="panel">
+        <div class="section-head">
+          <div class="section-title">Qualidade e auditoria</div>
+          <div class="section-note">Conflitos e sem mapeamento ficam vis&iacute;veis.</div>
+        </div>
+        <div class="kpi-grid" id="qualityGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">Posi&ccedil;&atilde;o f&iacute;sica de ARES informada pelas bases</div>
+        <div class="section-note">Fonte: levantamento manual. N&atilde;o conciliado individualmente por tag. N&atilde;o inclu&iacute;do automaticamente no total sist&ecirc;mico.</div>
+      </div>
+      <div class="manual-grid" id="manualAres"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">Indicadores de movimenta&ccedil;&atilde;o</div>
+        <div class="section-note">N&atilde;o comp&otilde;em a conta corrente.</div>
+      </div>
+      <div class="kpi-grid" id="opsGrid"></div>
+    </section>
+  </main>
+</div>
+
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div>
+      <h2 id="drawerTitle">Detalhamento</h2>
+      <p id="drawerSubtitle"></p>
+    </div>
+    <button class="icon-btn" id="closeDrawer" title="Fechar"><i class="fas fa-xmark"></i></button>
+  </div>
+  <div class="drawer-body">
+    <div class="filter-strip">
+      <input id="searchTag" type="search" placeholder="Buscar tag">
+      <select id="filterType"></select>
+      <select id="filterStatus"></select>
+      <select id="filterResp"></select>
+      <select id="filterLoc"></select>
+      <select id="filterClass"></select>
+      <select id="filterFaixa"></select>
+      <select id="filterConflict">
+        <option value="">Conflito</option>
+        <option value="true">Com conflito</option>
+        <option value="false">Sem conflito</option>
+      </select>
+      <select id="filterSource"></select>
+    </div>
+    <div class="count-line" id="drawerCount"></div>
+    <div style="overflow:auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Tag</th><th>Tipo</th><th>Status</th><th>Responsabilidade</th><th>Local</th><th>Fonte</th><th>Atualiza&ccedil;&atilde;o</th><th>Detalhe</th>
+          </tr>
+        </thead>
+        <tbody id="drawerRows"></tbody>
+      </table>
+    </div>
+  </div>
+</aside>
+
+<script src="CONTA_CORRENTE_DISPOSITIVOS_DATA.js"></script>
+<script>
+const DATA = window.CONTA_CORRENTE_DISPOSITIVOS_DATA || {snapshotValido:false,registros:[],resumoPorTipo:{},resumoPorStatus:{},resumoPorLocalizacao:{},faixasNaoRetorno:{},indicadoresOperacionais:{},qualidade:{}};
+const STATUS_LABELS = {
+  DISPONIVEL_PARA_UTILIZAR:"Disponivel para utilizar",
+  AGUARDANDO_EXPEDICAO:"Pendentes de envio",
+  EM_ROTA_DE_ENTREGA:"Em rota de entrega",
+  ENTREGUE_AO_CLIENTE:"Entregue ao cliente",
+  RETORNANDO:"Aguardando recebimento",
+  MANUTENCAO:"Manutencao",
+  CALIBRACAO:"Calibracao",
+  FIXO_EM_VEICULO:"Fixos em veiculos",
+  QUALIDADE:"Qualidade",
+  EXTRAVIO:"Extravio",
+  SEM_MAPEAMENTO:"Sem mapeamento"
+};
+const ICONS = {
+  DISPONIVEL_PARA_UTILIZAR:"fas fa-check-circle",
+  RETORNANDO:"fas fa-inbox",
+  EM_ROTA_DE_ENTREGA:"fas fa-truck",
+  RETORNADO:"fas fa-undo",
+  AGUARDANDO_EXPEDICAO:"fas fa-hourglass-half",
+  MANUTENCAO:"fas fa-tools",
+  CALIBRACAO:"fas fa-sliders-h",
+  FIXO_EM_VEICULO:"fas fa-car",
+  ENTREGUE_AO_CLIENTE:"fas fa-user-check",
+  QUALIDADE:"fas fa-clipboard-check",
+  EXTRAVIO:"fas fa-exclamation-triangle",
+  SEM_MAPEAMENTO:"fas fa-question-circle"
+};
+const TYPES = ["ARES","SHIELD","SENSOR VTC","SYOS"];
+let drawerBaseRows = [];
+
+function fmt(v){return v===null||v===undefined||v===""?"N/D":String(v)}
+function num(v){return Number(v||0).toLocaleString("pt-BR")}
+function shortDate(v){return v?new Date(v).toLocaleString("pt-BR"):"N/D"}
+function records(){return DATA.registros || []}
+function byFilter(filter){
+  return records().filter(r => Object.entries(filter).every(([k,v]) => {
+    if(v===undefined||v===null||v==="") return true;
+    return String(r[k] ?? "") === String(v);
+  }));
+}
+function buttonKpi(title,value,sub,filter){
+  const el=document.createElement("div"); el.className="kpi";
+  const btn=document.createElement("button");
+  btn.innerHTML=`<div class="kpi-title">${title}</div><div class="kpi-value">${num(value)}</div><div class="kpi-sub">${sub||""}</div>`;
+  btn.addEventListener("click",()=>openDrawer(title,filter||{}));
+  el.appendChild(btn); return el;
+}
+function renderMeta(){
+  const meta=document.getElementById("meta");
+  const total=records().length;
+  const generated=DATA.generatedAt?shortDate(DATA.generatedAt):"N/D";
+  meta.innerHTML=`
+    <span class="pill ok">${num(total)} tags sistemicas</span>
+    <span class="pill">Atualizado: ${generated}</span>
+    <span class="pill warn">Manual ARES separado</span>
+  `;
+}
+function renderTypeCards(){
+  const root=document.getElementById("typeCards"); root.innerHTML="";
+  TYPES.forEach(tipo=>{
+    const row=(DATA.resumoPorTipo||{})[tipo] || {total_sistemico_tags_unicas:0,quantidade_classificada:0,quantidade_sem_mapeamento:0,por_status:{},retornados:0,fora_operacao:0};
+    const card=document.createElement("article"); card.className="type-card"; card.tabIndex=0;
+    card.addEventListener("click",e=>{ if(e.target.closest(".detail-row")) return; card.classList.toggle("open"); });
+    const detailItems=[
+      ["DISPONIVEL_PARA_UTILIZAR",row.por_status?.DISPONIVEL_PARA_UTILIZAR||0],
+      ["RETORNANDO",row.por_status?.RETORNANDO||0],
+      ["EM_ROTA_DE_ENTREGA",row.por_status?.EM_ROTA_DE_ENTREGA||0],
+      ["RETORNADO",row.retornados||0],
+      ["AGUARDANDO_EXPEDICAO",row.por_status?.AGUARDANDO_EXPEDICAO||0],
+      ["MANUTENCAO",row.por_status?.MANUTENCAO||0],
+      ["CALIBRACAO",row.por_status?.CALIBRACAO||0],
+      ["FIXO_EM_VEICULO",row.por_status?.FIXO_EM_VEICULO||0],
+      ["ENTREGUE_AO_CLIENTE",row.por_status?.ENTREGUE_AO_CLIENTE||0],
+      ["QUALIDADE",row.por_status?.QUALIDADE||0],
+      ["EXTRAVIO",row.por_status?.EXTRAVIO||0],
+      ["SEM_MAPEAMENTO",row.por_status?.SEM_MAPEAMENTO||0]
+    ];
+    const details=detailItems.map(([status,value])=>{
+      const filter = status==="RETORNADO" ? `{tipo:"${tipo}",situacao_retorno:"RETORNADO"}` : `{tipo:"${tipo}",status_principal:"${status}"}`;
+      return `<button class="detail-row" data-filter='${filter}'><i class="${ICONS[status]}"></i><span>${STATUS_LABELS[status]||"Retornados"}</span><b>${num(value)}</b></button>`;
+    }).join("");
+    card.innerHTML=`
+      <div class="type-head"><div class="type-name">${tipo}</div><div class="type-date">${shortDate(row.ultima_atualizacao)}</div></div>
+      <button class="tag-btn type-total" data-type="${tipo}">${num(row.total_sistemico_tags_unicas)}</button>
+      <div class="type-caption">Total sistemico por tags unicas</div>
+      <div class="type-mini">
+        <div class="mini-stat"><b>${num(row.quantidade_classificada)}</b><span>Classificados</span></div>
+        <div class="mini-stat"><b>${num(row.quantidade_sem_mapeamento)}</b><span>Sem mapeamento</span></div>
+      </div>
+      <div class="detail-pop">${details}<button class="detail-row" data-filter='{ "tipo":"${tipo}", "fora_operacao":true }'><i class="fas fa-power-off"></i><span>Fora de operacao</span><b>${num(row.fora_operacao||0)}</b></button></div>
+    `;
+    card.querySelector(".type-total").addEventListener("click",e=>{e.stopPropagation();openDrawer(tipo,{tipo});});
+    card.querySelectorAll(".detail-row").forEach(btn=>{
+      btn.addEventListener("click",e=>{
+        e.stopPropagation();
+        const raw=btn.getAttribute("data-filter");
+        let f={};
+        if(raw.includes("fora_operacao")) f={tipo,status_principal:["MANUTENCAO","CALIBRACAO"]};
+        else f=Function("return ("+raw+")")();
+        openDrawer(`${tipo} - ${btn.innerText.replace(/\s+/g," ").trim()}`,f);
+      });
+    });
+    root.appendChild(card);
+  });
+}
+function renderLocations(){
+  const root=document.getElementById("locationGrid"); root.innerHTML="";
+  ["GRU","BSB","MG","GIG","CAMPINAS"].forEach(loc=>{
+    root.appendChild(buttonKpi(loc,(DATA.resumoPorLocalizacao||{})[loc]||0,loc==="GRU"?"Estoque central":"Filial",{localizacao:loc}));
+  });
+}
+function renderAging(){
+  const root=document.getElementById("agingGrid"); root.innerHTML="";
+  [["ATE_30","Ate 30 dias"],["31_60","De 31 a 60 dias"],["61_90","De 61 a 90 dias"],["91_180","Acima de 90 dias"]].forEach(([code,label])=>{
+    root.appendChild(buttonKpi(label,(DATA.faixasNaoRetorno||{})[code]||0,"Nao retorno",{faixa_sem_retorno:code}));
+  });
+}
+function renderQuality(){
+  const root=document.getElementById("qualityGrid"); root.innerHTML="";
+  root.appendChild(buttonKpi("Sem mapeamento",DATA.qualidade?.registros_sem_mapeamento||0,"Visivel no drill-down",{status_principal:"SEM_MAPEAMENTO"}));
+  root.appendChild(buttonKpi("Conflitos",DATA.qualidade?.conflitos||0,"Candidatos preservados",{possui_conflito:true}));
+  root.appendChild(buttonKpi("Sem tipo",DATA.qualidade?.registros_sem_tipo||0,"Qualidade de dados",{tipo:null}));
+  root.appendChild(buttonKpi("Extravio",DATA.resumoPorStatus?.EXTRAVIO||0,"Mais de 180 dias",{status_principal:"EXTRAVIO"}));
+}
+function renderManual(){
+  const root=document.getElementById("manualAres"); root.innerHTML="";
+  (DATA.posicaoManualAres||[]).forEach(row=>{
+    const div=document.createElement("div"); div.className="manual-card";
+    div.innerHTML=`<h3>${fmt(row.uf)} / ${fmt(row.base)}</h3><b>${num(row.quantidade_informada)}</b><p>Origem: ${fmt(row.origem)}<br>Data: ${fmt(row.data_referencia)}<br>Responsavel: ${fmt(row.responsavel_informacao)}<br>${fmt(row.observacao)}</p>`;
+    root.appendChild(div);
+  });
+}
+function renderOps(){
+  const root=document.getElementById("opsGrid"); root.innerHTML="";
+  const ops=DATA.indicadoresOperacionais||{};
+  [
+    ["Entregues 20 dias",ops.entregues_ultimos_20_dias],
+    ["Retornados 20 dias",ops.retornados_ultimos_20_dias],
+    ["Pendencias",ops.pendencias_operacionais],
+    ["Movimentos 5 dias",ops.movimentacoes_ultimos_5_dias],
+    ["Packing",ops.packing],
+    ["Recebimentos",ops.recebimentos_recentes],
+    ["Expedicoes",ops.expedicoes_recentes]
+  ].forEach(([title,value])=>{
+    const el=document.createElement("div"); el.className="kpi";
+    el.innerHTML=`<div class="kpi-title">${title}</div><div class="kpi-value">${fmt(value)==="N/D"?"N/D":num(value)}</div><div class="kpi-sub">Nao compoe a soma principal</div>`;
+    root.appendChild(el);
+  });
+}
+function setupSelect(id,label,values){
+  const el=document.getElementById(id);
+  el.innerHTML=`<option value="">${label}</option>` + [...values].filter(v=>v!==null&&v!==undefined&&v!=="").sort().map(v=>`<option value="${String(v).replaceAll('"',"&quot;")}">${v}</option>`).join("");
+  el.addEventListener("change",applyDrawerFilters);
+}
+function initFilters(){
+  const rs=records();
+  setupSelect("filterType","Tipo",new Set(rs.map(r=>r.tipo)));
+  setupSelect("filterStatus","Status",new Set(rs.map(r=>r.status_principal)));
+  setupSelect("filterResp","Responsabilidade",new Set(rs.map(r=>r.responsabilidade)));
+  setupSelect("filterLoc","Localizacao",new Set(rs.map(r=>r.localizacao)));
+  setupSelect("filterClass","Classificacao local",new Set(rs.map(r=>r.classificacao_local)));
+  setupSelect("filterFaixa","Faixa retorno",new Set(rs.map(r=>r.faixa_sem_retorno)));
+  setupSelect("filterSource","Fonte",new Set(rs.flatMap(r=>r.fontes_encontradas||[])));
+  ["searchTag","filterConflict"].forEach(id=>document.getElementById(id).addEventListener(id==="searchTag"?"input":"change",applyDrawerFilters));
+}
+function matchDrawer(r){
+  const search=document.getElementById("searchTag").value.trim().toUpperCase();
+  if(search && !String(r.equipamento_id||"").includes(search)) return false;
+  const map=[
+    ["filterType","tipo"],["filterStatus","status_principal"],["filterResp","responsabilidade"],
+    ["filterLoc","localizacao"],["filterClass","classificacao_local"],["filterFaixa","faixa_sem_retorno"]
+  ];
+  for(const [id,key] of map){const val=document.getElementById(id).value;if(val && String(r[key]??"")!==val)return false;}
+  const conflict=document.getElementById("filterConflict").value;
+  if(conflict && String(Boolean(r.possui_conflito))!==conflict) return false;
+  const source=document.getElementById("filterSource").value;
+  if(source && !(r.fontes_encontradas||[]).includes(source)) return false;
+  return true;
+}
+function rowMatchesFilter(r,filter){
+  for(const [key,val] of Object.entries(filter||{})){
+    if(Array.isArray(val)){ if(!val.includes(r[key])) return false; }
+    else if(val===true||val===false){ if(Boolean(r[key])!==val)return false; }
+    else if(val===null){ if(r[key]!==null && r[key]!==undefined)return false; }
+    else if(String(r[key]??"")!==String(val)) return false;
+  }
+  return true;
+}
+function openDrawer(title,filter){
+  drawerBaseRows=records().filter(r=>rowMatchesFilter(r,filter));
+  document.getElementById("drawerTitle").textContent=title;
+  document.getElementById("drawerSubtitle").textContent="Tags correspondentes ao numero selecionado";
+  document.querySelectorAll(".filter-strip input,.filter-strip select").forEach(el=>{el.value="";});
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("drawerBackdrop").classList.add("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","false");
+  applyDrawerFilters();
+}
+function applyDrawerFilters(){
+  const rows=drawerBaseRows.filter(matchDrawer);
+  document.getElementById("drawerCount").textContent=`${num(rows.length)} registros`;
+  const tbody=document.getElementById("drawerRows"); tbody.innerHTML="";
+  rows.slice(0,500).forEach(r=>{
+    const tr=document.createElement("tr");
+    const detail=[
+      r.destino,r.finalidade,r.responsavel,r.pedido_atual,r.veiculo,r.placa,
+      r.faixa_sem_retorno?`Faixa: ${r.faixa_sem_retorno}`:null,
+      r.possui_conflito?"Conflito":null
+    ].filter(Boolean).join(" | ");
+    tr.innerHTML=`<td>${fmt(r.equipamento_id)}</td><td>${fmt(r.tipo)}</td><td>${fmt(r.status_principal)}</td><td>${fmt(r.responsabilidade)}</td><td>${fmt(r.localizacao)}</td><td>${fmt(r.fonte_status)}</td><td>${shortDate(r.data_ultima_movimentacao)}</td><td class="muted">${fmt(detail)}</td>`;
+    tbody.appendChild(tr);
+  });
+  if(rows.length>500){
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td colspan="8" class="muted">Mostrando 500 de ${num(rows.length)} registros. Refine os filtros.</td>`;
+    tbody.appendChild(tr);
+  }
+}
+function closeDrawer(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("drawerBackdrop").classList.remove("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","true");
+}
+document.getElementById("closeDrawer").addEventListener("click",closeDrawer);
+document.getElementById("drawerBackdrop").addEventListener("click",closeDrawer);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer();});
+function boot(){
+  if(!DATA.snapshotValido){
+    document.querySelector("main").innerHTML='<div class="alert">Snapshot ainda nao gerado. Execute o gerador para carregar os dados sistemicos.</div>';
+    return;
+  }
+  renderMeta(); renderTypeCards(); renderLocations(); renderAging(); renderQuality(); renderManual(); renderOps(); initFilters();
+}
+boot();
+</script>
+</body>
+</html>

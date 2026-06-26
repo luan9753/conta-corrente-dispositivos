@@ -1,0 +1,117 @@
+{
+  "versao": "1.0.0",
+  "aura_root_leitura": "C:\\Users\\Administrador\\Documents\\PACOTE_AURA_24H (2)\\PACOTE_AURA_24H\\PACOTE_AURA_24H\\Banco_Aura",
+  "fontes_sistemicas": {
+    "posicao_atual": "vwTabelaMovDataloggers",
+    "historico": "public.tbddataloggerhistoricos",
+    "documentos": "vtc_stage.documentos"
+  },
+  "estoque_central": ["GRU"],
+  "filiais": ["BSB", "MG", "GIG", "CAMPINAS"],
+  "limite_extravio_dias": 180,
+  "faixas_nao_retorno": [
+    {"codigo": "ATE_30", "label": "Ate 30 dias", "min": 0, "max": 30},
+    {"codigo": "31_60", "label": "De 31 a 60 dias", "min": 31, "max": 60},
+    {"codigo": "61_90", "label": "De 61 a 90 dias", "min": 61, "max": 90},
+    {"codigo": "91_180", "label": "Acima de 90 dias", "min": 91, "max": 180}
+  ],
+  "diagnosticos": {
+    "shield_total_esperado": 119
+  },
+  "posicao_manual_ares": [
+    {
+      "tipo": "ARES",
+      "uf": "DF",
+      "base": "BSB",
+      "quantidade_informada": 116,
+      "origem": "LEVANTAMENTO_MANUAL",
+      "data_referencia": null,
+      "responsavel_informacao": null,
+      "observacao": "Posicao fisica informada manualmente pela base; nao conciliada individualmente por tag."
+    },
+    {
+      "tipo": "ARES",
+      "uf": "MG",
+      "base": "MG",
+      "quantidade_informada": 34,
+      "origem": "LEVANTAMENTO_MANUAL",
+      "data_referencia": null,
+      "responsavel_informacao": null,
+      "observacao": "Posicao fisica informada manualmente pela base; nao conciliada individualmente por tag."
+    },
+    {
+      "tipo": "ARES",
+      "uf": "RJ",
+      "base": "GIG",
+      "quantidade_informada": 50,
+      "origem": "LEVANTAMENTO_MANUAL",
+      "data_referencia": null,
+      "responsavel_informacao": null,
+      "observacao": "Posicao fisica informada manualmente pela base; nao conciliada individualmente por tag."
+    },
+    {
+      "tipo": "ARES",
+      "uf": "SP",
+      "base": "CAMPINAS",
+      "quantidade_informada": 1,
+      "origem": "LEVANTAMENTO_MANUAL",
+      "data_referencia": null,
+      "responsavel_informacao": null,
+      "observacao": "Posicao fisica informada manualmente pela base; nao conciliada individualmente por tag."
+    }
+  ],
+  "planilha_fixos_veiculos": {
+    "caminho": "C:\\Users\\Administrador\\Documents\\Novo indicador CONTA CORRENTE\\controle de loggers fixos dos ve\u00edculos - atualizado.xlsx",
+    "aba_preferencial": "LOGGERS FIXOS",
+    "origem": "PLANILHA_AUXILIAR_FIXOS_VEICULOS",
+    "metadados": {
+      "alterar_planilha": false,
+      "copiar_linhas_para_codigo": false,
+      "usar_como_fonte_auxiliar_controlada": true
+    }
+  },
+  "prioridade_fontes": [
+    "vwTabelaMovDataloggers",
+    "tbddataloggerhistoricos",
+    "vtc_stage.documentos",
+    "planilha_fixos_veiculos",
+    "snapshots_reversa"
+  ],
+  "status_principais": [
+    "DISPONIVEL_PARA_UTILIZAR",
+    "AGUARDANDO_EXPEDICAO",
+    "EM_ROTA_DE_ENTREGA",
+    "ENTREGUE_AO_CLIENTE",
+    "RETORNANDO",
+    "MANUTENCAO",
+    "CALIBRACAO",
+    "FIXO_EM_VEICULO",
+    "QUALIDADE",
+    "EXTRAVIO",
+    "SEM_MAPEAMENTO"
+  ],
+  "icones_interface": {
+    "DISPONIVEL_PARA_UTILIZAR": "fas fa-check-circle",
+    "RETORNANDO": "fas fa-inbox",
+    "EM_ROTA_DE_ENTREGA": "fas fa-truck",
+    "RETORNADO": "fas fa-undo",
+    "AGUARDANDO_EXPEDICAO": "fas fa-hourglass-half",
+    "MANUTENCAO": "fas fa-tools",
+    "CALIBRACAO": "fas fa-sliders-h",
+    "FIXO_EM_VEICULO": "fas fa-car",
+    "ENTREGUE_AO_CLIENTE": "fas fa-user-check",
+    "QUALIDADE": "fas fa-clipboard-check",
+    "EXTRAVIO": "fas fa-exclamation-triangle",
+    "SEM_MAPEAMENTO": "fas fa-question-circle"
+  },
+  "mapeamentos": {
+    "locais": {
+      "GRU": {"classificacao_local": "ESTOQUE_CENTRAL"},
+      "BSB": {"classificacao_local": "FILIAL"},
+      "MG": {"classificacao_local": "FILIAL"},
+      "GIG": {"classificacao_local": "FILIAL"},
+      "CAMPINAS": {"classificacao_local": "FILIAL"}
+    },
+    "observacao": "Os mapeamentos executaveis ficam no gerador para preservar rastreabilidade por regra aplicada; este arquivo guarda parametros ajustaveis e metadados."
+  }
+}
