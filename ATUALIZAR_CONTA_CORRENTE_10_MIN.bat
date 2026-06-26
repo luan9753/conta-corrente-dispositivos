@@ -3,10 +3,17 @@ setlocal EnableExtensions EnableDelayedExpansion
 title Conta Corrente de Dispositivos - Atualizacao
 
 set "PROJECT_DIR=%~dp0"
-set "PYTHON_EXE=python"
+set "PYTHON_EXE=C:\Users\Administrador\AppData\Local\Programs\Python\Python311\python.exe"
 set "LOG_DIR=%PROJECT_DIR%logs"
+set "LOCK_DIR=%PROJECT_DIR%.conta_corrente_update.lock"
 
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
+
+mkdir "%LOCK_DIR%" 2>nul
+if errorlevel 1 (
+  echo [%date% %time%] Outra atualizacao ainda esta em andamento. Encerrando este disparo.
+  exit /b 0
+)
 
 :RUN_ONCE
 set "STAMP=%date% %time%"
@@ -14,16 +21,17 @@ set "RUN_ID=%date:~-4%%date:~3,2%%date:~0,2%_%time:~0,2%%time:~3,2%%time:~6,2%"
 set "RUN_ID=%RUN_ID: =0%"
 set "LOG_FILE=%LOG_DIR%\conta_corrente_%RUN_ID%.log"
 echo [%STAMP%] Iniciando atualizacao da Conta Corrente de Dispositivos...
+echo [%STAMP%] Iniciando atualizacao da Conta Corrente de Dispositivos... >> "%LOG_FILE%"
 
 cd /d "%PROJECT_DIR%"
 
-%PYTHON_EXE% "%PROJECT_DIR%gerar_conta_corrente_dispositivos.py" >> "%LOG_FILE%" 2>&1
+"%PYTHON_EXE%" -u "%PROJECT_DIR%gerar_conta_corrente_dispositivos.py" >> "%LOG_FILE%" 2>&1
 if errorlevel 1 (
   echo [%date% %time%] ERRO no gerador. Push bloqueado. >> "%LOG_FILE%"
   goto END
 )
 
-%PYTHON_EXE% "%PROJECT_DIR%validar_conta_corrente_dispositivos.py" >> "%LOG_FILE%" 2>&1
+"%PYTHON_EXE%" -u "%PROJECT_DIR%validar_conta_corrente_dispositivos.py" >> "%LOG_FILE%" 2>&1
 if errorlevel 1 (
   echo [%date% %time%] ERRO no validador. Push bloqueado. >> "%LOG_FILE%"
   goto END
@@ -50,4 +58,5 @@ if /I "%~1"=="/loop" (
   goto RUN_ONCE
 )
 
+rmdir "%LOCK_DIR%" 2>nul
 endlocal

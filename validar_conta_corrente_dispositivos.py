@@ -195,10 +195,10 @@ def write_report(data: dict[str, Any], config: dict[str, Any], results: list[dic
         lines.append(f"- {premissa}")
     lines.append("")
     lines.append("## Totais sistemicos")
-    lines.append("| Tipo | Total tags unicas | Classificados | Sem mapeamento | Fora de operacao | Retornados |")
-    lines.append("|---|---:|---:|---:|---:|---:|")
+    lines.append("| Tipo | Total contratado | Total sistemico tags unicas | Diferenca sistema x contratado | Classificados | Sem mapeamento | Fora de operacao | Retornados |")
+    lines.append("|---|---:|---:|---:|---:|---:|---:|---:|")
     for tipo, row in resumo_tipo.items():
-        lines.append(f"| {tipo} | {row.get('total_sistemico_tags_unicas')} | {row.get('quantidade_classificada')} | {row.get('quantidade_sem_mapeamento')} | {row.get('fora_operacao')} | {row.get('retornados')} |")
+        lines.append(f"| {tipo} | {row.get('total_contratado')} | {row.get('total_sistemico_tags_unicas')} | {row.get('diferenca_sistemico_contratado')} | {row.get('quantidade_classificada')} | {row.get('quantidade_sem_mapeamento')} | {row.get('fora_operacao')} | {row.get('retornados')} |")
     lines.append("")
     lines.append("## Posicao manual de ARES")
     lines.append("| UF | Base | Quantidade | Origem | Data referencia | Responsavel | Observacao |")

@@ -262,13 +262,19 @@ function renderTypeCards(){
       const filter = status==="RETORNADO" ? `{tipo:"${tipo}",situacao_retorno:"RETORNADO"}` : `{tipo:"${tipo}",status_principal:"${status}"}`;
       return `<button class="detail-row" data-filter='${filter}'><i class="${ICONS[status]}"></i><span>${STATUS_LABELS[status]||"Retornados"}</span><b>${num(value)}</b></button>`;
     }).join("");
+    const principal = row.total_sistemico_tags_unicas;
+    const principalLabel = row.total_contratado ? "Sistema auditado por tags" : "Total sistemico por tags unicas";
+    const miniLeftValue = row.total_contratado ?? row.quantidade_classificada;
+    const miniLeftLabel = row.total_contratado ? "Contratado" : "Classificados";
+    const miniRightValue = row.total_contratado ? row.diferenca_sistemico_contratado : row.quantidade_sem_mapeamento;
+    const miniRightLabel = row.total_contratado ? "Dif. sistema" : "Sem mapeamento";
     card.innerHTML=`
       <div class="type-head"><div class="type-name">${tipo}</div><div class="type-date">${shortDate(row.ultima_atualizacao)}</div></div>
-      <button class="tag-btn type-total" data-type="${tipo}">${num(row.total_sistemico_tags_unicas)}</button>
-      <div class="type-caption">Total sistemico por tags unicas</div>
+      <button class="tag-btn type-total" data-type="${tipo}">${num(principal)}</button>
+      <div class="type-caption">${principalLabel}${row.alerta_contratual ? " | " + row.alerta_contratual : ""}</div>
       <div class="type-mini">
-        <div class="mini-stat"><b>${num(row.quantidade_classificada)}</b><span>Classificados</span></div>
-        <div class="mini-stat"><b>${num(row.quantidade_sem_mapeamento)}</b><span>Sem mapeamento</span></div>
+        <div class="mini-stat"><b>${num(miniLeftValue)}</b><span>${miniLeftLabel}</span></div>
+        <div class="mini-stat"><b>${miniRightValue>0?"+":""}${num(miniRightValue)}</b><span>${miniRightLabel}</span></div>
       </div>
       <div class="detail-pop">${details}<button class="detail-row" data-filter='{ "tipo":"${tipo}", "fora_operacao":true }'><i class="fas fa-power-off"></i><span>Fora de operacao</span><b>${num(row.fora_operacao||0)}</b></button></div>
     `;

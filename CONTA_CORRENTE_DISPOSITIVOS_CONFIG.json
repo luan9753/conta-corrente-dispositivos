@@ -18,6 +18,14 @@
   "diagnosticos": {
     "shield_total_esperado": 119
   },
+  "referencias_contratuais": {
+    "ARES": {
+      "total_contratado": 10712,
+      "origem": "INFORMADO_PELO_USUARIO",
+      "data_referencia": "2026-06-26",
+      "observacao": "Total unico de ARES contratado, consolidando ARES e ARES COM SONDA."
+    }
+  },
   "posicao_manual_ares": [
     {
       "tipo": "ARES",

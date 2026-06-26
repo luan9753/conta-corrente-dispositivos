@@ -83,6 +83,16 @@ def normalize_tag(value: Any) -> str | None:
     return tag
 
 
+def compact_tag(value: Any) -> str:
+    tag = normalize_tag(value) or ""
+    return tag.replace("-", "").replace(" ", "")
+
+
+def is_ares_contract_scope(equipamento_id: Any) -> bool:
+    tag = compact_tag(equipamento_id)
+    return bool(re.fullmatch(r"A[0-9]{4}", tag) or re.fullmatch(r"AS[0-9]{3,4}", tag))
+
+
 def parse_dt(value: Any) -> pd.Timestamp | None:
     if value is None or (isinstance(value, float) and pd.isna(value)):
         return None
@@ -473,15 +483,17 @@ def build_stage_candidates(df: pd.DataFrame) -> tuple[list[dict[str, Any]], dict
         return [], {"entregues_20d": 0, "expedicoes_recentes": 0}
     work = df.copy()
     work["equipamento_id"] = work["ds_tag"].map(normalize_tag)
+    work["tipo_normalizado"] = work["ds_tipo"].map(normalize_type)
     for col in ["dt_coletaefetiva", "dt_entregaefetiva", "imported_at"]:
         work[col] = pd.to_datetime(work[col], errors="coerce", utc=True).dt.tz_convert(None)
-    work = work[work["equipamento_id"].notna()].copy()
+    work = work[work["equipamento_id"].notna() & work["tipo_normalizado"].notna()].copy()
     if work.empty:
         return [], {"entregues_20d": 0, "expedicoes_recentes": 0}
     work["_data_evento"] = work[["dt_entregaefetiva", "dt_coletaefetiva", "imported_at"]].max(axis=1)
     latest = work.sort_values(["equipamento_id", "_data_evento"], ascending=[True, False]).drop_duplicates("equipamento_id")
     out: list[dict[str, Any]] = []
     for _, row in latest.iterrows():
+        tipo_stage = row.get("tipo_normalizado")
         entregue = pd.notna(row.get("dt_entregaefetiva"))
         coletado = pd.notna(row.get("dt_coletaefetiva"))
         if entregue:
@@ -503,7 +515,7 @@ def build_stage_candidates(df: pd.DataFrame) -> tuple[list[dict[str, Any]], dict
         out.append(candidate(
             row["equipamento_id"],
             row.get("ds_tag"),
-            row.get("ds_tipo"),
+            tipo_stage,
             "vtc_stage.documentos",
             status,
             "ENTREGA" if entregue else ("COLETA" if coletado else None),
@@ -631,6 +643,8 @@ def build_final_records(
     if not stage_df.empty:
         st = stage_df.copy()
         st["equipamento_id"] = st["ds_tag"].map(normalize_tag)
+        st["tipo_normalizado"] = st["ds_tipo"].map(normalize_type)
+        st = st[st["tipo_normalizado"].notna()].copy()
         st["dt_entregaefetiva"] = pd.to_datetime(st["dt_entregaefetiva"], errors="coerce", utc=True).dt.tz_convert(None)
         grouped = st[st["equipamento_id"].notna()].groupby("equipamento_id")["dt_entregaefetiva"].max()
         delivery_dates = {tag: iso_dt(val) for tag, val in grouped.items()}
@@ -647,6 +661,11 @@ def build_final_records(
         winner = dict(ordered[0])
         if not winner.get("tipo"):
             winner["tipo"] = type_by_tag.get(tag)
+        if winner.get("tipo") == "ARES" and not is_ares_contract_scope(tag):
+            winner["tipo"] = None
+            winner["tipo_origem"] = winner.get("tipo_origem")
+            winner["regra_aplicada"] = f"{winner.get('regra_aplicada')}; REGRA_TAG_FORA_ESCOPO_ARES_CONTRATADO"
+            winner["motivo_sem_mapeamento"] = winner.get("motivo_sem_mapeamento") or "TAG_FORA_ESCOPO_ARES_CONTRATADO"
         status_values = {r.get("status_principal") for r in ordered if r.get("status_principal")}
         winner_dt = parse_dt(winner.get("data_evento"))
         conflict = False
@@ -737,12 +756,25 @@ def build_final_records(
 
 def summarize(records: list[dict[str, Any]], config: dict[str, Any], fixed_info: dict[str, Any], indicators: dict[str, Any]) -> dict[str, Any]:
     by_type: dict[str, dict[str, Any]] = {}
+    referencias = config.get("referencias_contratuais", {})
     for dtype in DEVICE_TYPES:
         rows = [r for r in records if r.get("tipo") == dtype]
         c_status = Counter(r["status_principal"] for r in rows)
+        contrato = referencias.get(dtype, {})
+        total_contratado = contrato.get("total_contratado")
+        diferenca_contrato = (len(rows) - int(total_contratado)) if total_contratado is not None else None
         by_type[dtype] = {
             "tipo": dtype,
+            "total_contratado": total_contratado,
+            "origem_total_contratado": contrato.get("origem"),
+            "observacao_total_contratado": contrato.get("observacao"),
             "total_sistemico_tags_unicas": len(rows),
+            "diferenca_sistemico_contratado": diferenca_contrato,
+            "alerta_contratual": (
+                f"Total sistemico ({len(rows)}) diferente do total contratado ({total_contratado})"
+                if total_contratado is not None and len(rows) != int(total_contratado)
+                else None
+            ),
             "quantidade_classificada": len([r for r in rows if r.get("status_principal") != "SEM_MAPEAMENTO"]),
             "quantidade_sem_mapeamento": c_status.get("SEM_MAPEAMENTO", 0),
             "ultima_atualizacao": max([r.get("data_ultima_movimentacao") for r in rows if r.get("data_ultima_movimentacao")], default=None),
@@ -870,6 +902,7 @@ def main() -> int:
         "premissasAplicadas": [
             "equipamento_id = upper(trim(tag))",
             "ARES e ARES COM SONDA consolidados no tipo ARES",
+            "Total contratado de ARES informado pelo usuario: 10.712; divergencia sistemica fica como diagnostico",
             "Dados manuais de ARES nao compoem totais sistemicos",
             "Retornados sao subindicador e nao duplicam status principal",
             "Indicadores operacionais ficam fora da conta corrente",
