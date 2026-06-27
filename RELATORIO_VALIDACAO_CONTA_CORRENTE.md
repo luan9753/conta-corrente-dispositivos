@@ -1,6 +1,6 @@
 # Relatorio de validacao - Conta corrente de dispositivos
 
-Gerado em: 2026-06-27T02:01:10
+Gerado em: 2026-06-27T02:10:11
 Snapshot: `CONTA_CORRENTE_DISPOSITIVOS_DATA.js`
 Registros sistemicos: 15529
 Falhas obrigatorias: 4
@@ -25,11 +25,11 @@ Alertas: 0
 - `vwTabelaMovDataloggers`: tipo=sistemica, linhas_lidas=15505
 - `tbddataloggerhistoricos`: tipo=sistemica, linhas_lidas_latest=12222, linhas_rollup=12222
 - `vtc_stage.documentos`: tipo=sistemica, linhas_lidas=71837
-- `planilha_fixos_veiculos`: tipo=auxiliar, caminho=C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx, nome_arquivo=controle de loggers fixos dos veículos - atualizado.xlsx, existe=True, data_leitura=2026-06-27T01:59:25, abas=['LOGGERS FIXOS', 'COORDENADORES', 'DATA CALIBRAÇÃO', 'AGREGADOS', 'IMPRESSÃO', 'Planilha2'], colunas_identificadas=['EMPRESA', 'DESCRIÇÃO', 'PLACA', 'MOTORISTA', 'LOGGER 1', 'CALIBRAÇÃO', 'DIAS RESTANTES', 'SITUAÇÃO', 'LOGGER 2', 'CALIBRAÇÃO2', 'DIAS RESTANTES2', 'SITUAÇÃO2', 'LOGGER 3', 'CALIBRAÇÃO3', 'DIAS RESTANTES3', 'SITUAÇÃO3', 'STATUS', 'SENSORWEB 1', 'SENSORWEB 2', 'COORDENADOR', 'DATA DE INSTALAÇÃO', 'ÚLTIMA CONFIGURAÇÃO', 'PRAZO MÁXIMO DA MEMÓRIA', 'Dias Para Baixar', 'Data Atual', 'AÇÃO GQ', 'Check Coordenador', 'Concat', 'Check Pendência', 'Circustância', 'OBSERVAÇÃO', 'Coluna2'], linhas_lidas=107, tags_identificadas=186, linhas_sem_tag_suficiente=22, erro=None
+- `planilha_fixos_veiculos`: tipo=auxiliar, caminho=C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx, nome_arquivo=controle de loggers fixos dos veículos - atualizado.xlsx, existe=True, data_leitura=2026-06-27T02:08:40, abas=['LOGGERS FIXOS', 'COORDENADORES', 'DATA CALIBRAÇÃO', 'AGREGADOS', 'IMPRESSÃO', 'Planilha2'], colunas_identificadas=['EMPRESA', 'DESCRIÇÃO', 'PLACA', 'MOTORISTA', 'LOGGER 1', 'CALIBRAÇÃO', 'DIAS RESTANTES', 'SITUAÇÃO', 'LOGGER 2', 'CALIBRAÇÃO2', 'DIAS RESTANTES2', 'SITUAÇÃO2', 'LOGGER 3', 'CALIBRAÇÃO3', 'DIAS RESTANTES3', 'SITUAÇÃO3', 'STATUS', 'SENSORWEB 1', 'SENSORWEB 2', 'COORDENADOR', 'DATA DE INSTALAÇÃO', 'ÚLTIMA CONFIGURAÇÃO', 'PRAZO MÁXIMO DA MEMÓRIA', 'Dias Para Baixar', 'Data Atual', 'AÇÃO GQ', 'Check Coordenador', 'Concat', 'Check Pendência', 'Circustância', 'OBSERVAÇÃO', 'Coluna2'], linhas_lidas=107, tags_identificadas=186, linhas_sem_tag_suficiente=22, erro=None
 
 ## Planilha auxiliar de fixos em veiculos
 - Caminho: `C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx`
-- Data de leitura: 2026-06-27T01:59:25
+- Data de leitura: 2026-06-27T02:08:40
 - Abas: LOGGERS FIXOS, COORDENADORES, DATA CALIBRAÇÃO, AGREGADOS, IMPRESSÃO, Planilha2
 - Colunas identificadas: EMPRESA, DESCRIÇÃO, PLACA, MOTORISTA, LOGGER 1, CALIBRAÇÃO, DIAS RESTANTES, SITUAÇÃO, LOGGER 2, CALIBRAÇÃO2, DIAS RESTANTES2, SITUAÇÃO2, LOGGER 3, CALIBRAÇÃO3, DIAS RESTANTES3, SITUAÇÃO3, STATUS, SENSORWEB 1, SENSORWEB 2, COORDENADOR, DATA DE INSTALAÇÃO, ÚLTIMA CONFIGURAÇÃO, PRAZO MÁXIMO DA MEMÓRIA, Dias Para Baixar, Data Atual, AÇÃO GQ, Check Coordenador, Concat, Check Pendência, Circustância, OBSERVAÇÃO, Coluna2
 - Tags identificadas na planilha: 186
@@ -68,7 +68,7 @@ Alertas: 0
 - registros_sem_data: 0
 - registros_sem_tipo: 1182
 - registros_sem_mapeamento: 1374
-- conflitos: 6354
+- conflitos: 6355
 
 ## Aging e extravios
 - Faixas de nao retorno: `{"ATE_30": 3877, "31_60": 414, "61_90": 192, "91_180": 519}`
@@ -108,7 +108,7 @@ Alertas: 0
 | 19 | OK | Quantidade de registros sem data | sem_data=0 |
 | 20 | FALHA | Registros sem tipo justificados ou eliminados | sem_tipo=1182 |
 | 21 | FALHA | Status sem mapeamento analisado e resolvido | sem_mapeamento=1374 |
-| 22 | FALHA | Conflitos resolvidos com criterio auditavel | conflitos=6354 |
+| 22 | FALHA | Conflitos resolvidos com criterio auditavel | conflitos=6355 |
 | 23 | FALHA | Divergencia SHIELD tecnicamente reconciliada | Total sistemico SHIELD diferente da referencia diagnostica 119 |
 | 24 | OK | RETORNADO nao duplica a posicao atual | retornado como subindicador |
 | 25 | OK | PENDENCIA nao vira aging automaticamente | pendencias preservadas |
@@ -122,8 +122,8 @@ Alertas: 0
 | Arquivo | SHA-256 antes | SHA-256 depois |
 |---|---|---|
 | `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\GESTAO_DISPOSITIVOS.html` | `AF9BAFCAF492956835F327731FDDC1F73E105FDEDC318BACADB6E9B434EBC3B5` | `AF9BAFCAF492956835F327731FDDC1F73E105FDEDC318BACADB6E9B434EBC3B5` |
-| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\GESTAO_DISPOSITIVOS_STAGE_DATA.js` | `CC2D894DA974DC16AF4C399AED9915929C918055CD7027EA0317F6360A05034E` | `CC2D894DA974DC16AF4C399AED9915929C918055CD7027EA0317F6360A05034E` |
-| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\ESTOQUE_DATALOGGERS.html` | `A15060BAE1143F519C1F2CC198816513B3A68CA6921E20EE49C8EF2606D38BB5` | `A15060BAE1143F519C1F2CC198816513B3A68CA6921E20EE49C8EF2606D38BB5` |
+| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\GESTAO_DISPOSITIVOS_STAGE_DATA.js` | `814EB5356BE9E9B649C977145358563795E91DE6F289BA0FCAE622DE334969B4` | `814EB5356BE9E9B649C977145358563795E91DE6F289BA0FCAE622DE334969B4` |
+| `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\ESTOQUE_DATALOGGERS.html` | `796FDB32B62592AF094BD3942705690FFD717115EE9AB5229D5DF7BD9BD697AA` | `796FDB32B62592AF094BD3942705690FFD717115EE9AB5229D5DF7BD9BD697AA` |
 | `C:\Users\Administrador\Documents\PACOTE_AURA_24H (2)\PACOTE_AURA_24H\PACOTE_AURA_24H\Banco_Aura\ATUALIZAR_TUDO_10_MIN.ps1` | `D063B496BC52243634CB2C7EE384F02C1B206FF1A65C3EC26A650BAD02E3BD38` | `D063B496BC52243634CB2C7EE384F02C1B206FF1A65C3EC26A650BAD02E3BD38` |
 | `C:\Users\Administrador\Documents\Novo indicador CONTA CORRENTE\controle de loggers fixos dos veículos - atualizado.xlsx` | `E75624F75EA907C089FD74653E52928A68B542B7BC04C0D9A2E11B8B08A88655` | `E75624F75EA907C089FD74653E52928A68B542B7BC04C0D9A2E11B8B08A88655` |
 
