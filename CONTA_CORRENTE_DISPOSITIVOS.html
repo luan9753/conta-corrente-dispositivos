@@ -885,8 +885,8 @@
       <div class="stat-value" id="statTotal">-</div>
       <div class="stat-bar"><div class="fill" style="width:100%;background:var(--accent)"></div></div>
     </div>
-    <div class="stat-item">
-      <div class="stat-label">Em Operação</div>
+    <div class="stat-item" title="Tags classificadas fora de manutenção, calibração, extravio e sem mapeamento.">
+      <div class="stat-label">Posição Operacional Classificada</div>
       <div class="stat-value" id="statOperacao" style="color:var(--green)">-</div>
       <div class="stat-bar"><div class="fill" id="barOperacao" style="background:var(--green)"></div></div>
     </div>
@@ -896,12 +896,12 @@
       <div class="stat-bar"><div class="fill" id="barFora" style="background:var(--yellow)"></div></div>
     </div>
     <div class="stat-item">
-      <div class="stat-label">Com Conflito</div>
-      <div class="stat-value" id="statConflito" style="color:var(--red)">-</div>
-      <div class="stat-bar"><div class="fill" id="barConflito" style="background:var(--red)"></div></div>
+      <div class="stat-label">Extraviados Totais</div>
+      <div class="stat-value" id="statExtravio" style="color:var(--red)">-</div>
+      <div class="stat-bar"><div class="fill" id="barExtravio" style="background:var(--red)"></div></div>
     </div>
-    <div class="stat-item">
-      <div class="stat-label">Cobertura</div>
+    <div class="stat-item" title="Percentual de tags únicas que receberam um status principal diferente de SEM_MAPEAMENTO.">
+      <div class="stat-label">Cobertura de Mapeamento</div>
       <div class="stat-value" id="statCobertura">-</div>
       <div class="stat-bar"><div class="fill" id="barCobertura" style="background:var(--cyan)"></div></div>
     </div>
@@ -929,7 +929,7 @@
       <div class="panel">
         <div class="section-head">
           <div class="section-title"><i class="fas fa-shield-alt"></i>Qualidade e Auditoria</div>
-          <div class="section-note">Conflitos e sem mapeamento ficam visíveis.</div>
+          <div class="section-note">Divergências técnicas preservadas para auditoria.</div>
         </div>
         <div class="kpi-grid quality-grid" id="qualityGrid"></div>
       </div>
@@ -1172,12 +1172,10 @@ function renderMeta() {
   const meta = document.getElementById("meta");
   const total = records().length;
   const generated = DATA.generatedAt ? shortDate(DATA.generatedAt) : "N/D";
-  const conflictCount = DATA.qualidade?.conflitos || 0;
   meta.innerHTML = `
     <span class="pill ok"><i class="fas fa-database"></i>${num(total)} tags</span>
     <span class="pill"><i class="fas fa-calendar"></i>${generated}</span>
     <span class="pill warn"><i class="fas fa-hand-paper"></i>Manual ARES separado</span>
-    ${conflictCount > 0 ? `<span class="pill danger"><i class="fas fa-exclamation-triangle"></i>${num(conflictCount)} conflitos</span>` : ""}
   `;
 }
 
@@ -1186,19 +1184,19 @@ function renderStatsBar() {
   const total = rs.length;
   const emOperacao = rs.filter(r => !["MANUTENCAO", "CALIBRACAO", "EXTRAVIO", "SEM_MAPEAMENTO"].includes(r.status_principal)).length;
   const foraOperacao = rs.filter(r => ["MANUTENCAO", "CALIBRACAO"].includes(r.status_principal)).length;
-  const conflitos = rs.filter(r => r.possui_conflito).length;
+  const extraviados = rs.filter(r => r.status_principal === "EXTRAVIO").length;
   const mapeados = rs.filter(r => r.status_principal !== "SEM_MAPEAMENTO").length;
   const cobertura = total > 0 ? Math.round((mapeados / total) * 100) : 0;
 
   document.getElementById("statTotal").textContent = num(total);
   document.getElementById("statOperacao").textContent = num(emOperacao);
   document.getElementById("statFora").textContent = num(foraOperacao);
-  document.getElementById("statConflito").textContent = num(conflitos);
+  document.getElementById("statExtravio").textContent = num(extraviados);
   document.getElementById("statCobertura").textContent = `${cobertura}%`;
 
   document.getElementById("barOperacao").style.width = `${total > 0 ? (emOperacao / total) * 100 : 0}%`;
   document.getElementById("barFora").style.width = `${total > 0 ? (foraOperacao / total) * 100 : 0}%`;
-  document.getElementById("barConflito").style.width = `${total > 0 ? (conflitos / total) * 100 : 0}%`;
+  document.getElementById("barExtravio").style.width = `${total > 0 ? (extraviados / total) * 100 : 0}%`;
   document.getElementById("barCobertura").style.width = `${cobertura}%`;
   document.getElementById("statsBar").style.display = "grid";
 }
@@ -1250,7 +1248,7 @@ function renderQuality() {
   root.innerHTML = "";
   const items = [
     ["Sem mapeamento", DATA.qualidade?.registros_sem_mapeamento || 0, "Visível no drill-down", { status_principal: "SEM_MAPEAMENTO" }, "danger", "fas fa-question-circle"],
-    ["Conflitos", DATA.qualidade?.conflitos || 0, "Candidatos preservados", { possui_conflito: true }, "warning", "fas fa-exclamation-triangle"],
+    ["Divergências técnicas", DATA.qualidade?.conflitos || 0, "Candidatos preservados para auditoria", { possui_conflito: true }, "warning", "fas fa-exclamation-triangle"],
     ["Sem tipo", DATA.qualidade?.registros_sem_tipo || 0, "Qualidade de dados", { tipo: null }, "warning", "fas fa-tag"],
     ["Extravio", DATA.resumoPorStatus?.EXTRAVIO || 0, "Mais de 180 dias", { status_principal: "EXTRAVIO" }, "danger", "fas fa-ban"]
   ];
