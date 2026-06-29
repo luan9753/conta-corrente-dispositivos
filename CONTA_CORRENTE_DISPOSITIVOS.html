@@ -753,6 +753,121 @@
     .filter-strip input, .filter-strip select { min-width: 100%; }
   }
 </style>
+
+<style id="tema-cores-backup-2">
+  /*
+    Ajuste exclusivamente cromático.
+    Estrutura, dimensões, organização dos cards e JavaScript permanecem iguais
+    à versão de produção.
+  */
+
+  /* Corrige a borda de interação já utilizada pela versão de produção. */
+  .type-card:hover,
+  .type-card.open {
+    border-color: #2a3d5c;
+  }
+
+  /* Paleta da versão "CONTA_CORRENTE_DISPOSITIVOS backup 2". */
+  .mini-stat {
+    background: #131b2e;
+    border-color: #1e2d4a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .mini-stat b,
+  .mini-stat span {
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .mini-stat span {
+    color: #6b7f9e;
+  }
+
+  .detail-pop {
+    background: #131b2e;
+    border-color: #1e2d4a;
+  }
+
+  .type-card.open .detail-pop {
+    border-color: #2a3d5c;
+  }
+
+  .detail-pop-header {
+    /* Mesma leitura visual do backup 2, ligeiramente mais larga dentro do painel. */
+    margin-left: -2px;
+    margin-right: -2px;
+    padding-left: 2px;
+    padding-right: 2px;
+    border-bottom-color: #1e2d4a;
+  }
+
+  .detail-pop-header span {
+    color: #6b7f9e;
+    font-size: 0.75rem;
+  }
+
+  .detail-pop-header button {
+    background: transparent;
+    border: none;
+    color: #6b7f9e;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 4px;
+    border-radius: 4px;
+    transition: var(--transition);
+  }
+
+  .detail-pop-header button:hover {
+    color: #e8edf5;
+    background: #1a243d;
+  }
+
+  .detail-row:hover {
+    background: #1a243d;
+  }
+
+  .detail-row i {
+    color: #60a5fa;
+  }
+
+  .detail-row span {
+    color: #a0b4d0;
+  }
+
+  /*
+    Não Retorno: distribuição balanceada.
+    Evita o efeito 3 + 1 causado pelo auto-fit dentro do painel dividido.
+  */
+  #agingGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  #agingGrid .kpi {
+    min-width: 0;
+    min-height: 128px;
+    height: 100%;
+  }
+
+  #agingGrid .kpi button {
+    min-height: 86px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  @media (max-width: 640px) {
+    #agingGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 </head>
 <body>
 <div class="shell">
